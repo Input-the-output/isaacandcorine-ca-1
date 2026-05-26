@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isaac & Corine Wedding</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ======================= -->
+  <!--      ENVELOPE           -->
+  <!-- ======================= -->
+
+  <div id="envelope-screen" class="envelope-overlay">
+    <video
+      id="envelope-video"
+      class="envelope-video"
+      src="assets/intro-letter.mp4"
+      poster="assets/intro-letter-poster.jpg"
+      playsinline
+      muted
+      preload="auto">
+    </video>
+
+    <button id="open-envelope-btn" class="envelope-click-area" aria-label="Open invitation">
+      <span id="intro-prompt">
+        <span class="intro-prompt-tap">Tap to open</span>
+      </span>
+    </button>
+  </div>
+
+  <!-- ======================= -->
+  <!--      NAVIGATION         -->
+  <!-- ======================= -->
+
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <a href="#home">I & C</a>
+      </div>
+
+      <nav class="nav-links" id="nav-links">
+        <ul>
+          <li><a href="#invitation">Invitation</a></li>
+          <li><a href="#countdown">Countdown</a></li>
+          <li><a href="#location">Location</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#travel">Travel</a></li>
+          <li><a href="#discover">Discover</a></li>
+          <li><a href="#gifts">Gifts</a></li>
+          <li><a href="#rsvp">RSVP</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<button class="music-btn" aria-label="Play Music"></button>
+
+  <!-- ======================= -->
+  <!--      HERO SECTION       -->
+  <!-- ======================= -->
+
+  <section id="home" class="hero-section">
+    <video
+      class="hero-bg-video"
+      src="assets/hero-birds.mp4"
+      autoplay
+      loop
+      muted
+      playsinline>
+    </video>
+
+    <div class="hero-content">
+      <h1 class="main-title">
+        <span>Isaac & Corine</span>
+      </h1>
+
+      <p class="wedding-date">20 . 06 . 2026</p>
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--   INVITATION SECTION    -->
+  <!-- ======================= -->
+
+  <section id="invitation" class="invitation-section">
+    <div class="invitation-content">
+
+    <img
+    src="assets/rings-illustration-tO3OeALU.webp"
+    alt=""
+    class="invitation-rings"
+    loading="lazy"
+    >
+
+    <div class="divider icon-heart">♡</div>
+
+    <p class="parents-text">
+    Mr. Johnny & Mrs Jeanne-Marie Corm<br>
+    <span class="parents-join">along with</span><br>
+    Mr. Tony & Mrs. Amal Freiha
+    </p>
+
+      <p class="invite-text">
+        request the honor of your presence<br>
+        at the wedding of their son and daughter
+      </p>
+
+      <h2 class="couple-names">
+        <span>Isaac</span>
+        <span class="ampersand">&</span>
+        <span>Corine</span>
+      </h2>
+
+      <div class="divider icon-star">✦</div>
+
+      <p class="date-details">
+        Saturday, the twentieth of June<br>
+        two thousand twenty-six
+      </p>
+
+      <p class="ceremony-details">
+        The ceremony will be held<br>
+        at half past five in the evening<br>
+        <span class="venue-name">St Simon Church</span><br>
+        <span class="venue-location">Ghosta</span>
+      </p>
+
+      <p class="reception-details">
+        A dinner reception will follow<br>
+        at eight o'clock in the evening<br>
+        <span class="venue-name">Chateau Rweiss</span><br>
+        <span class="venue-location">Chnaniir</span>
+      </p>
+
+      <div class="divider icon-heart">♡</div>
+
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--      COUNTDOWN          -->
+  <!-- ======================= -->
+
+  <section id="countdown" class="countdown-section">
+    <img
+      src="assets/champagne-illustration-CplOg0Lb.webp"
+      alt="Cheers"
+      class="countdown-icon"
+    >
+
+    <h2 class="section-title">Countdown</h2>
+
+    <div class="timer-container" id="timer">
+      <div class="time-box">
+        <span id="days" class="time-number">00</span>
+        <span class="time-label">Days</span>
+      </div>
+
+      <div class="time-box">
+        <span id="hours" class="time-number">00</span>
+        <span class="time-label">Hours</span>
+      </div>
+
+      <div class="time-box">
+        <span id="minutes" class="time-number">00</span>
+        <span class="time-label">Minutes</span>
+      </div>
+
+      <div class="time-box">
+        <span id="seconds" class="time-number">00</span>
+        <span class="time-label">Seconds</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--          IMAGE          -->
+  <!-- ======================= -->
+
+  <section class="image-break">
+    <div class="image-container">
+      <img src="assets/ball-dance.webp" alt="Isaac and Corine dancing" class="full-width-img">
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--      LOCATION           -->
+  <!-- ======================= -->
+
+  <section id="location" class="location-section">
+    <h2 class="section-title">Location</h2>
+
+    <div class="venues-grid">
+
+      <div class="venue-card">
+        <div class="venue-icon">⌂</div>
+
+        <h3 class="venue-name">St Simon Church</h3>
+        <p class="venue-type-text">Ceremony</p>
+        <p class="venue-city">Ghosta, Lebanon</p>
+
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=Saint%20Simon%20Church%20Ghosta%20Lebanon&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=Saint%20Simon%20Church%20Ghosta%20Lebanon"
+          class="btn-map"
+          target="_blank">
+          Get Directions
+        </a>
+      </div>
+
+        <div class="venue-card">
+        <div class="venue-icon">▤</div>
+
+        <h3 class="venue-name">Chateau Rweiss</h3>
+        <p class="venue-type-text">Dinner Reception</p>
+        <p class="venue-city">Chnaniir, Lebanon</p>
+
+        <div class="map-frame">
+            <iframe
+            src="https://www.google.com/maps?q=Chateau%20Rweiss%20Chnaniir%20Lebanon&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+        <a
+            href="https://www.google.com/maps/search/?api=1&query=Chateau%20Rweiss%20Chnaniir%20Lebanon"
+            class="btn-map"
+            target="_blank">
+            Get Directions
+        </a>
+        </div>
+
+  </div>
+</section>
+
+  <!-- ======================= -->
+  <!--       SCHEDULE          -->
+  <!-- ======================= -->
+
+  <section id="schedule" class="schedule-section">
+    <h2 class="section-title">Schedule</h2>
+    <p class="section-subtitle">The order of celebration</p>
+
+    <div class="timeline-container">
+
+      <div class="timeline-item">
+        <div class="time-block">
+          <span class="time">5:30 PM</span>
+        </div>
+
+        <div class="event-info">
+          <h3 class="event-title">Traditional Walk</h3>
+          <p class="event-location">A traditional walk to the church</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time-block">
+          <span class="time">6:00 PM</span>
+        </div>
+
+        <div class="event-info">
+          <h3 class="event-title">Ceremony</h3>
+          <p class="event-location">St Simon Church, Ghosta</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time-block">
+          <span class="time">7:00 PM</span>
+        </div>
+
+        <div class="event-info">
+          <h3 class="event-title">Guest Arrival</h3>
+          <p class="event-location">Chateau Rweiss, Chnaniir</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time-block">
+          <span class="time">8:00 PM</span>
+        </div>
+
+        <div class="event-info">
+          <h3 class="event-title">Welcome Drink</h3>
+          <p class="event-location">Cocktail hour</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time-block">
+          <span class="time">11:00 AM</span>
+        </div>
+
+        <div class="event-info">
+          <h3 class="event-title">After Party</h3>
+          <p class="event-location">Dance the night away</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--      TRAVEL & STAY      -->
+  <!-- ======================= -->
+
+  <section id="travel" class="travel-section">
+    <h2 class="section-title">Travel & Stay</h2>
+    <p class="section-subtitle">Everything you need for your visit to Lebanon</p>
+
+    <div class="travel-content">
+
+      <div class="travel-block">
+        <h3 class="travel-small-title">Where to Stay</h3>
+
+        <div class="hotel-pills">
+          <a href="#" class="hotel-pill">O Monot</a>
+          <a href="#" class="hotel-pill">Saifi Suites</a>
+          <a href="#" class="hotel-pill">Arthaus Beirut</a>
+          <a href="#" class="hotel-pill">Albergo</a>
+          <a href="#" class="hotel-pill">Saint George Hotel & Resort</a>
+          <a href="#" class="hotel-pill">Lost</a>
+          <a href="#" class="hotel-pill">Vocco</a>
+        </div>
+
+        <p class="contact-note">Contact us for special Isaac & Corine rates</p>
+      </div>
+
+      <div class="travel-block restaurants-block">
+        <h3 class="travel-small-title">Restaurants & Nightlife</h3>
+
+        <div class="accordion-list">
+
+          <button class="accordion-item" type="button">
+            <span>Lebanese Cuisines</span>
+            <span class="accordion-arrow">⌄</span>
+          </button>
+
+          <button class="accordion-item" type="button">
+            <span>International Cuisines — Lunch</span>
+            <span class="accordion-arrow">⌄</span>
+          </button>
+
+          <button class="accordion-item" type="button">
+            <span>International Cuisines — Dinner</span>
+            <span class="accordion-arrow">⌄</span>
+          </button>
+
+          <button class="accordion-item" type="button">
+            <span>Beach Restaurants</span>
+            <span class="accordion-arrow">⌄</span>
+          </button>
+
+          <button class="accordion-item" type="button">
+            <span>Mountain Restaurants</span>
+            <span class="accordion-arrow">⌄</span>
+          </button>
+
+          <button class="accordion-item" type="button">
+            <span>Bars & Nightlife</span>
+            <span class="accordion-arrow">⌄</span>
+          </button>
+
+          <button class="accordion-item" type="button">
+            <span>Nightclubs</span>
+            <span class="accordion-arrow">⌄</span>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--        DISCOVER         -->
+  <!-- ======================= -->
+
+  <section id="discover" class="discover-section">
+    <h2 class="section-title">Discover Lebanon</h2>
+    <p class="section-subtitle">Explore the beauty of this ancient land while you're here</p>
+
+    <a href="#" class="discover-main-btn">Explore Destinations</a>
+
+    <div class="good-to-know">
+      <h3 class="discover-small-title">Good to Know</h3>
+
+      <div class="tips-grid">
+
+        <div class="tip-card">
+          <div class="tip-icon">▤</div>
+          <h4>Cash</h4>
+          <p>Have cash (USD) on hand</p>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">◷</div>
+          <h4>Water</h4>
+          <p>Don't drink tap water</p>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">▱</div>
+          <h4>Transportation</h4>
+          <p>Alo Taxi for local rides</p>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-icon">♙</div>
+          <h4>Hair & Makeup</h4>
+          <p>Coiffe Moi by Riad and Jean</p>
+          <p>Dessange</p>
+          <p>Tony El Mendelek</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--          GIFTS          -->
+  <!-- ======================= -->
+
+  <section id="gifts" class="gifts-section">
+    <div class="divider icon-star">✦</div>
+
+    <h2 class="section-title">Our Registry</h2>
+
+    <p class="registry-text">
+      We can't wait to celebrate this special day with you. Your presence truly is the greatest gift of all,
+      but for those who wish, a wedding registry is available below.
+    </p>
+
+    <div class="registry-card">
+      <div class="registry-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 12v8H4v-8"></path>
+          <path d="M2 7h20v5H2z"></path>
+          <path d="M12 7v13"></path>
+          <path d="M12 7H7.5A2.5 2.5 0 1 1 10 4.5C10 6 12 7 12 7z"></path>
+        </svg>
+      </div>
+
+      <h3 class="registry-card-title">Bank Account Details</h3>
+
+      <button type="button" class="registry-btn">
+        View Details
+      </button>
+    </div>
+
+    <div class="divider icon-heart">♡</div>
+  </section>
+
+  <!-- ======================= -->
+  <!--      RESERVATION        -->
+  <!-- ======================= -->
+
+  <section id="rsvp" class="rsvp-section">
+    <h2 class="section-title">RSVP</h2>
+
+    <p class="rsvp-subtitle">We hope to see you there</p>
+
+    <p class="rsvp-deadline">
+      Kindly respond by May 15, 2026
+    </p>
+
+    <div class="rsvp-form-container">
+      <form id="rsvp-form" class="rsvp-form">
+        <p class="rsvp-form-title">Find your invitation</p>
+
+        <label for="guest-name" class="form-label">Your Full Name</label>
+
+        <input
+          type="text"
+          id="guest-name"
+          name="guest-name"
+          placeholder="Enter your name as it appears on your invitation"
+          required
+          class="form-input"
+        >
+
+        <button type="submit" class="btn-submit">
+          Find Your Invitation
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ======================= -->
+  <!--      FOOTER             -->
+  <!-- ======================= -->
+
+  <footer class="site-footer">
+    <div class="footer-divider">
+      <span></span>
+      <span class="footer-heart">♡</span>
+      <span></span>
+    </div>
+
+    <div class="footer-content">
+      <h2 class="footer-names">Isaac & Corine</h2>
+      <p class="footer-date">June 20, 2026</p>
+      <p class="footer-tagline">Two hearts, one journey</p>
+      <div class="footer-logo">I & C</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
