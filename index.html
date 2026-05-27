@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Isaac & Corine Wedding</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"> 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -483,7 +484,8 @@
     </p>
 
     <div class="rsvp-form-container">
-        <form class="rsvp-form" action="submit_rsvp.php" method="POST">
+	  <form id="rsvp-form" class="rsvp-form" action="submit_rsvp.php" method="POST">
+ 	   <input type="hidden" name="action" value="find">  
           <p class="rsvp-form-title">Find your invitation</p>
 
         <label for="guest-name" class="form-label">Your Full Name</label>

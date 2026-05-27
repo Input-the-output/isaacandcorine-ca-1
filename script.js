@@ -669,58 +669,272 @@ function observeFadeIns() {
     document.head.appendChild(style);
   }
 
-  /* ============================================
-     RSVP 
-  ============================================ */
-  const rsvpForm    = document.getElementById("rsvp-form");
-  const guestInput  = document.getElementById("guest-name");
-  const submitBtn   = rsvpForm ? rsvpForm.querySelector(".btn-submit") : null;
+/* ============================================
+   RSVP AJAX
+============================================ */
 
-  if (rsvpForm && guestInput && submitBtn) {
-    rsvpForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+const rsvpContainer = document.querySelector(".rsvp-form-container");
 
-      const name = guestInput.value.trim();
-      if (!name) {
-        showRsvpMessage("Please enter your full name.", "error");
+let currentGuest = null;
+
+let rsvpChoices = {
+  pre_wedding_attendance: "",
+  wedding_attendance: ""
+};
+
+if (rsvpContainer) {
+  attachRsvpSearchHandler();
+}
+
+function attachRsvpSearchHandler() {
+  const form = document.getElementById("rsvp-form");
+  const input = document.getElementById("guest-name");
+  const button = form ? form.querySelector(".btn-submit") : null;
+
+  if (!form || !input || !button) return;
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const name = input.value.trim();
+
+    if (!name) {
+      showRsvpMessage("Please enter your full name.", "error");
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Checking...";
+
+    try {
+      const formData = new FormData();
+      formData.append("action", "find");
+      formData.append("full_name", name);
+
+      const response = await fetch("submit_rsvp.php", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.status === "already_submitted") {
+        showRsvpMessage(
+          "Your RSVP has already been recorded. If you need to make changes, please contact us directly.",
+          "error"
+        );
         return;
       }
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Sending…";
+      if (!result.success) {
+        showRsvpMessage(result.message, "error");
+        return;
+      }
 
-      setTimeout(function () {
-        showRsvpMessage(
-          "Thank you, " + name + "! We've noted your response and will be in touch. " +
-          "If you have any questions, please contact us directly.",
-          "success"
-        );
-        guestInput.value = "";
-        submitBtn.disabled  = false;
-        submitBtn.textContent = "Find Your Invitation";
-      }, 900);
+      currentGuest = {
+        id: result.guest_id,
+        name: result.guest_name
+      };
+
+      if (result.status === "found") {
+        showInvitationForm(result.guest_name);
+      }
+    } catch (error) {
+      showRsvpMessage("Could not check your invitation. Please try again.", "error");
+    } finally {
+      button.disabled = false;
+      button.textContent = "Find Your Invitation";
+    }
+  });
+}
+
+function showInvitationForm(guestName) {
+  rsvpChoices = {
+    pre_wedding_attendance: "",
+    wedding_attendance: ""
+  };
+
+  rsvpContainer.innerHTML = `
+    <button type="button" class="rsvp-back-btn">← Back</button>
+
+    <div class="rsvp-guest-card">
+      <div class="rsvp-heart">♡</div>
+      <h3>${escapeHtml(guestName)}</h3>
+      <div class="rsvp-star">✦</div>
+    </div>
+
+    <div class="rsvp-note-card">
+      <div class="rsvp-star-small">✽</div>
+      <p><strong>The celebrations will begin before the big day!</strong></p>
+      <p>If you can, we encourage you to arrive starting <strong>Tuesday</strong>, as we'll be enjoying a few fun plans throughout the week!<br>More details to follow.</p>
+    </div>
+
+    <div class="rsvp-event-card" data-event="pre_wedding_attendance">
+      <h3>Pre-Wedding</h3>
+      <p>Thursday 18 June 2026</p>
+      <em>Details to follow</em>
+
+      <div class="rsvp-event-options">
+        <div class="rsvp-event-name">${escapeHtml(guestName)}</div>
+
+        <button type="button" class="rsvp-choice-btn" data-value="attending">
+          <span>✓</span>
+          Attending
+        </button>
+
+        <button type="button" class="rsvp-choice-btn" data-value="declining">
+          <span>✕</span>
+          Declining
+        </button>
+      </div>
+    </div>
+
+    <div class="rsvp-event-card" data-event="wedding_attendance">
+      <h3>Wedding</h3>
+      <p>Saturday 20 June 2026</p>
+
+      <div class="rsvp-event-options">
+        <div class="rsvp-event-name">${escapeHtml(guestName)}</div>
+
+        <button type="button" class="rsvp-choice-btn" data-value="attending">
+          <span>✓</span>
+          Attending
+        </button>
+
+        <button type="button" class="rsvp-choice-btn" data-value="declining">
+          <span>✕</span>
+          Declining
+        </button>
+      </div>
+    </div>
+
+    <button type="button" class="btn-submit rsvp-confirm-btn">
+      Send Confirmation
+    </button>
+  `;
+
+  rsvpContainer.querySelector(".rsvp-back-btn").addEventListener("click", resetRsvpSearch);
+
+  rsvpContainer.querySelectorAll(".rsvp-choice-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const card = btn.closest(".rsvp-event-card");
+      const eventName = card.dataset.event;
+      const value = btn.dataset.value;
+
+      rsvpChoices[eventName] = value;
+
+      card.querySelectorAll(".rsvp-choice-btn").forEach(function (otherBtn) {
+        otherBtn.classList.remove("selected");
+      });
+
+      btn.classList.add("selected");
     });
+  });
+
+  rsvpContainer.querySelector(".rsvp-confirm-btn").addEventListener("click", submitFinalRsvp);
+}
+
+async function submitFinalRsvp() {
+  if (!currentGuest) return;
+
+  if (!rsvpChoices.pre_wedding_attendance) {
+    showRsvpMessage("Please select your Pre-Wedding attendance.", "error");
+    return;
   }
 
-  function showRsvpMessage(text, type) {
-    const existing = document.querySelector(".rsvp-inline-msg");
-    if (existing) existing.remove();
-
-    const msg = document.createElement("p");
-    msg.className = "rsvp-inline-msg";
-    msg.textContent = text;
-    msg.style.cssText =
-      "font-family:var(--font-body);font-size:0.9rem;font-style:italic;" +
-      "margin-top:1rem;text-align:center;padding:0.75rem 1rem;" +
-      "border-radius:6px;animation:fadeInUp 0.4s ease forwards;" +
-      (type === "error"
-        ? "color:#8b4513;background:rgba(139,69,19,0.08);border:1px solid rgba(139,69,19,0.2);"
-        : "color:var(--sage-dark);background:rgba(88,112,66,0.08);border:1px solid rgba(88,112,66,0.25);");
-
-    const container = document.querySelector(".rsvp-form-container");
-    if (container) container.appendChild(msg);
+  if (!rsvpChoices.wedding_attendance) {
+    showRsvpMessage("Please select your Wedding attendance.", "error");
+    return;
   }
 
+  const confirmBtn = rsvpContainer.querySelector(".rsvp-confirm-btn");
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = "Sending...";
+
+  try {
+    const formData = new FormData();
+    formData.append("action", "submit");
+    formData.append("guest_id", currentGuest.id);
+    formData.append("full_name", currentGuest.name);
+    formData.append("pre_wedding_attendance", rsvpChoices.pre_wedding_attendance);
+    formData.append("wedding_attendance", rsvpChoices.wedding_attendance);
+
+    const response = await fetch("submit_rsvp.php", {
+      method: "POST",
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      resetRsvpSearch();
+      showRsvpMessage("Thank you! Your RSVP was submitted successfully.", "success");
+    } else {
+      showRsvpMessage(result.message, "error");
+    }
+  } catch (error) {
+    showRsvpMessage("Could not submit RSVP. Please try again.", "error");
+  } finally {
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = "Send Confirmation";
+  }
+}
+
+function resetRsvpSearch() {
+  currentGuest = null;
+
+  rsvpContainer.innerHTML = `
+    <form id="rsvp-form" class="rsvp-form" action="submit_rsvp.php" method="POST">
+      <input type="hidden" name="action" value="find">
+
+      <p class="rsvp-form-title">Find your invitation</p>
+
+      <label for="guest-name" class="form-label">Your Full Name</label>
+
+      <input
+        type="text"
+        id="guest-name"
+        name="full_name"
+        placeholder="Enter your name as it appears on your invitation"
+        required
+        class="form-input"
+      >
+
+      <button type="submit" class="btn-submit">
+        Find Your Invitation
+      </button>
+    </form>
+  `;
+
+  attachRsvpSearchHandler();
+}
+
+function showRsvpMessage(text, type) {
+  const existing = document.querySelector(".rsvp-inline-msg");
+  if (existing) existing.remove();
+
+  const msg = document.createElement("p");
+  msg.className = "rsvp-inline-msg";
+  msg.textContent = text;
+
+  msg.style.cssText =
+    "font-family:var(--font-body);font-size:1.25rem;" +
+    "margin-top:1.8rem;text-align:center;line-height:1.6;" +
+    (type === "error"
+      ? "color:#9c4f5a;"
+      : "color:var(--sage-dark);");
+
+  if (rsvpContainer) rsvpContainer.appendChild(msg);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
   /* ============================================
      NAV LINK SMOOTH SCROLL
   ============================================ */
