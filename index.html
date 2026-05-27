@@ -483,15 +483,15 @@
     </p>
 
     <div class="rsvp-form-container">
-      <form id="rsvp-form" class="rsvp-form">
-        <p class="rsvp-form-title">Find your invitation</p>
+        <form class="rsvp-form" action="submit_rsvp.php" method="POST">
+          <p class="rsvp-form-title">Find your invitation</p>
 
         <label for="guest-name" class="form-label">Your Full Name</label>
 
         <input
           type="text"
           id="guest-name"
-          name="guest-name"
+          name="full_name"
           placeholder="Enter your name as it appears on your invitation"
           required
           class="form-input"
