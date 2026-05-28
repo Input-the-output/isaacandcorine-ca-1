@@ -10,6 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Inject DB credentials
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+        run: |
+          sed -i "s|__DB_PASSWORD__|$DB_PASSWORD|" submit_rsvp.php
+          sed -i "s|__DB_NAME__|$DB_NAME|" submit_rsvp.php
+
       - name: Deploy via rsync
         uses: burnett01/rsync-deployments@7.0.2
         with:

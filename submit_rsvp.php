@@ -12,8 +12,8 @@ mysqli_report(MYSQLI_REPORT_OFF);
 ========================= */
 $host = "sql312.infinityfree.com";
 $user = "if0_42030387";
-$password = "81387985";
-$database = "if0_42030387_wedding";
+$password = "__DB_PASSWORD__";
+$database = "__DB_NAME__";
 
 /* =========================
    JSON RESPONSE HELPER
