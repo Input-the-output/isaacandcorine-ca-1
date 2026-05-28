@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Isaac & Corine Wedding</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"> 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -159,6 +159,7 @@
     >
 
     <h2 class="section-title">Countdown</h2>
+    <p class="section-subtitle">Until we celebrate together</p>
 
     <div class="timer-container" id="timer">
       <div class="time-box">
@@ -211,6 +212,7 @@
 
         <div class="map-frame">
           <iframe
+            title="Map to St Simon Church"
             src="https://www.google.com/maps?q=Saint%20Simon%20Church%20Ghosta%20Lebanon&output=embed"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
@@ -220,7 +222,8 @@
         <a
           href="https://www.google.com/maps/search/?api=1&query=Saint%20Simon%20Church%20Ghosta%20Lebanon"
           class="btn-map"
-          target="_blank">
+          target="_blank"
+          rel="noopener noreferrer">
           Get Directions
         </a>
       </div>
@@ -234,6 +237,7 @@
 
         <div class="map-frame">
             <iframe
+            title="Map to Chateau Rweiss"
             src="https://www.google.com/maps?q=Chateau%20Rweiss%20Chnaniir%20Lebanon&output=embed"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
@@ -243,7 +247,8 @@
         <a
             href="https://www.google.com/maps/search/?api=1&query=Chateau%20Rweiss%20Chnaniir%20Lebanon"
             class="btn-map"
-            target="_blank">
+            target="_blank"
+            rel="noopener noreferrer">
             Get Directions
         </a>
         </div>
@@ -274,7 +279,7 @@
 
       <div class="timeline-item">
         <div class="time-block">
-          <span class="time">6:00 PM</span>
+          <span class="time"></span>
         </div>
 
         <div class="event-info">
@@ -296,7 +301,7 @@
 
       <div class="timeline-item">
         <div class="time-block">
-          <span class="time">8:00 PM</span>
+          <span class="time"></span>
         </div>
 
         <div class="event-info">
@@ -307,7 +312,18 @@
 
       <div class="timeline-item">
         <div class="time-block">
-          <span class="time">11:00 AM</span>
+          <span class="time">8:00 PM</span>
+        </div>
+
+        <div class="event-info">
+          <h3 class="event-title">Dinner Reception</h3>
+          <p class="event-location">Dinner, toasts, and celebration</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time-block">
+          <span class="time">1:00 AM</span>
         </div>
 
         <div class="event-info">
@@ -315,6 +331,8 @@
           <p class="event-location">Dance the night away</p>
         </div>
       </div>
+
+    </div>
 
     </div>
   </section>
@@ -339,7 +357,7 @@
           <a href="#" class="hotel-pill">Albergo</a>
           <a href="#" class="hotel-pill">Saint George Hotel & Resort</a>
           <a href="#" class="hotel-pill">Lost</a>
-          <a href="#" class="hotel-pill">Vocco</a>
+          <a href="#" class="hotel-pill">Voco</a>
         </div>
 
         <p class="contact-note">Contact us for special Isaac & Corine rates</p>
@@ -404,33 +422,60 @@
     <div class="good-to-know">
       <h3 class="discover-small-title">Good to Know</h3>
 
-      <div class="tips-grid">
+<div class="tips-grid">
 
         <div class="tip-card">
-          <div class="tip-icon">▤</div>
+          <div class="tip-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+              <line x1="2" y1="10" x2="22" y2="10"></line>
+              <circle cx="6" cy="14" r="1"></circle>
+              <line x1="9" y1="14" x2="14" y2="14"></line>
+            </svg>
+          </div>
           <h4>Cash</h4>
           <p>Have cash (USD) on hand</p>
         </div>
 
         <div class="tip-card">
-          <div class="tip-icon">◷</div>
+          <div class="tip-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <line x1="12" y1="3" x2="12" y2="7"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+              <path d="M8 11s1.5 3 4 3 4-3 4-3"></path>
+            </svg>
+          </div>
           <h4>Water</h4>
           <p>Don't drink tap water</p>
         </div>
 
         <div class="tip-card">
-          <div class="tip-icon">▱</div>
+          <div class="tip-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="11" width="12" height="8" rx="2"></rect>
+              <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+              <circle cx="12" cy="15" r="1"></circle>
+            </svg>
+          </div>
           <h4>Transportation</h4>
           <p>Alo Taxi for local rides</p>
         </div>
 
         <div class="tip-card">
-          <div class="tip-icon">♙</div>
+          <div class="tip-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M6 21c0-4 2-6 6-6s6 2 6 6"></path>
+            </svg>
+          </div>
           <h4>Hair & Makeup</h4>
           <p>Coiffe Moi by Riad and Jean</p>
           <p>Dessange</p>
           <p>Tony El Mendelek</p>
         </div>
+        
+      </div>
 
       </div>
     </div>
@@ -525,7 +570,7 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 
 </body>
 
