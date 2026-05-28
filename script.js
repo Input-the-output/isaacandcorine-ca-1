@@ -678,8 +678,9 @@
         const li = document.createElement("li");
         li.textContent = name;
         li.style.cssText =
-          "font-family:var(--font-body);font-size:0.9rem;" +
-          "color:var(--muted-fg);padding:0.3rem 0;" +
+          "font-family:var(--font-body);font-size:0.92rem;" +
+          "color:var(--muted-fg);position:relative;" +
+          "padding:0.35rem 0 0.45rem 1rem;" +
           "border-bottom:1px solid rgba(88,112,66,0.12);";
 
         ul.appendChild(li);
