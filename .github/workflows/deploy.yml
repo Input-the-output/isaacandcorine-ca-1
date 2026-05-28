@@ -13,8 +13,8 @@ jobs:
       - name: Create .env file from secrets
         run: |
           cat > .env << EOF
-          DB_HOST=sql312.infinityfree.com
-          DB_USER=if0_42030387
+          DB_HOST=localhost
+          DB_USER=${{ secrets.DB_USER }}
           DB_PASS=${{ secrets.DB_PASSWORD }}
           DB_NAME=${{ secrets.DB_NAME }}
           DB_PORT=3306
