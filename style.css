@@ -3601,3 +3601,119 @@ ol {
   }
 }
 
+
+/* ============================================
+   FINAL FIX - RESTAURANT / CUISINE LIST
+   Removes the ugly bullets completely.
+   Keep this at the very end of the CSS file.
+============================================ */
+
+.accordion-content ul,
+.accordion-content .restaurant-list,
+.restaurant-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.accordion-content .restaurant-list,
+.restaurant-list {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: 1.4rem !important;
+  row-gap: 0 !important;
+  text-align: left !important;
+}
+
+.accordion-content ul li,
+.accordion-content .restaurant-list li,
+.restaurant-list li {
+  list-style: none !important;
+  position: relative !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+
+  font-family: var(--font-body) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.55 !important;
+  color: var(--muted-fg) !important;
+
+  border-bottom: 1px solid rgba(88, 112, 66, 0.12) !important;
+  padding-bottom: 0.45rem !important;
+  margin-bottom: 0.45rem !important;
+}
+
+.accordion-content ul li::marker,
+.accordion-content .restaurant-list li::marker,
+.restaurant-list li::marker {
+  content: "" !important;
+}
+
+.accordion-content ul li::before,
+.accordion-content .restaurant-list li::before,
+.restaurant-list li::before {
+  content: none !important;
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .accordion-content .restaurant-list,
+  .restaurant-list {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================
+   FINAL RESTAURANT BULLET FIX
+   Keep this at the VERY END of the CSS file.
+============================================ */
+
+.restaurant-list {
+  list-style: none !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: 1.55rem !important;
+  row-gap: 0 !important;
+  padding: 0.75rem 1.25rem 1rem !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.restaurant-list li {
+  list-style: none !important;
+  position: relative !important;
+  padding: 0.35rem 0 0.45rem 1rem !important;
+  margin: 0 !important;
+
+  font-family: var(--font-body) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.55 !important;
+  color: var(--muted-fg) !important;
+
+  border-bottom: 1px solid rgba(88, 112, 66, 0.12) !important;
+}
+
+.restaurant-list li::marker {
+  content: "" !important;
+}
+
+.restaurant-list li::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 1.05em !important;
+
+  width: 4px !important;
+  height: 4px !important;
+  border-radius: 50% !important;
+
+  background: var(--sage-dark) !important;
+  opacity: 0.85 !important;
+}
+
+@media (max-width: 768px) {
+  .restaurant-list {
+    grid-template-columns: 1fr !important;
+  }
+}

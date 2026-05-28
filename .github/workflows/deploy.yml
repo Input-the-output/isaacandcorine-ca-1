@@ -10,13 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Inject DB credentials
-        env:
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
+      - name: Create .env file from secrets
         run: |
-          sed -i "s|__DB_PASSWORD__|$DB_PASSWORD|" submit_rsvp.php
-          sed -i "s|__DB_NAME__|$DB_NAME|" submit_rsvp.php
+          cat > .env << EOF
+          DB_HOST=sql312.infinityfree.com
+          DB_USER=if0_42030387
+          DB_PASS=${{ secrets.DB_PASSWORD }}
+          DB_NAME=${{ secrets.DB_NAME }}
+          DB_PORT=3306
+          EOF
 
       - name: Deploy via rsync
         uses: burnett01/rsync-deployments@7.0.2
