@@ -24,17 +24,7 @@
   const sections = document.querySelectorAll("section[id]");
   const navAnchors = navLinks ? navLinks.querySelectorAll("a") : [];
 
-  /*
-     RSVP PHP ENDPOINT
-
-     If index.html and submit_rsvp.php are on the same InfinityFree site,
-     keep this as "submit_rsvp.php".
-
-     If index.html is on GitHub Pages and PHP is on InfinityFree,
-     replace this with the full InfinityFree PHP URL, for example:
-     "https://your-site.infinityfreeapp.com/submit_rsvp.php"
-  */
-  const RSVP_API_URL = window.RSVP_API_URL || "submit_rsvp.php";
+  const RSVP_API_URL = "submit_rsvp.php";
 
   async function postRsvpRequest(formData) {
     const response = await fetch(RSVP_API_URL, {
@@ -47,6 +37,12 @@
     });
 
     const text = await response.text();
+
+    if (!text.trim()) {
+      console.error("Empty response from PHP.");
+      throw new Error("Empty response from server.");
+    }
+
     let result;
 
     try {
@@ -56,7 +52,7 @@
       throw new Error("Invalid response from server.");
     }
 
-    if (!response.ok) {
+    if (!response.ok || !result.success) {
       throw new Error(result.message || "Request failed.");
     }
 
@@ -943,7 +939,8 @@
           showInvitationForm(result.guest_name);
         }
       } catch (error) {
-        showRsvpMessage("Could not check your invitation. Please try again.", "error");
+        console.error("RSVP search error:", error);
+        showRsvpMessage(error.message || "Could not check your invitation. Please try again.", "error");
       } finally {
         button.disabled = false;
         button.textContent = "Find Your Invitation";
@@ -1078,7 +1075,8 @@
         btn.classList.add("selected");
       });
     });
-        const confirmBtn = rsvpContainer.querySelector(".rsvp-confirm-btn");
+
+    const confirmBtn = rsvpContainer.querySelector(".rsvp-confirm-btn");
     if (confirmBtn) {
       confirmBtn.addEventListener("click", submitFinalRsvp);
     }
@@ -1106,7 +1104,8 @@
       showRsvpMessage("Please select your Guest +1 Wedding attendance.", "error");
       return;
     }
-const confirmBtn = rsvpContainer.querySelector(".rsvp-confirm-btn");
+
+    const confirmBtn = rsvpContainer.querySelector(".rsvp-confirm-btn");
     if (!confirmBtn) return;
 
     confirmBtn.disabled = true;
@@ -1131,7 +1130,8 @@ const confirmBtn = rsvpContainer.querySelector(".rsvp-confirm-btn");
         showRsvpMessage(result.message || "Could not submit RSVP.", "error");
       }
     } catch (error) {
-      showRsvpMessage("Could not submit RSVP. Please try again.", "error");
+      console.error("RSVP submit error:", error);
+      showRsvpMessage(error.message || "Could not submit RSVP. Please try again.", "error");
     } finally {
       confirmBtn.disabled = false;
       confirmBtn.textContent = "Send Confirmation";

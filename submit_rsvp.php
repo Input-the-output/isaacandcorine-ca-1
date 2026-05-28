@@ -7,34 +7,13 @@ error_reporting(E_ALL);
 
 mysqli_report(MYSQLI_REPORT_OFF);
 
-/* =========================
-   ENV LOADER
-========================= */
-function load_env($path) {
-    if (!file_exists($path)) {
-        send_json(false, "env_missing", ".env file not found.");
-    }
-
-    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-    foreach ($lines as $line) {
-        $line = trim($line);
-
-        if ($line === "" || str_starts_with($line, "#")) {
-            continue;
-        }
-
-        if (strpos($line, "=") !== false) {
-            [$key, $value] = explode("=", $line, 2);
-            $_ENV[trim($key)] = trim($value);
-        }
-    }
-}
+require_once __DIR__ . "/env_loader.php";
 
 /* =========================
    JSON RESPONSE HELPER
 ========================= */
-function send_json($success, $status, $message, $extra = []) {
+function send_json($success, $status, $message, $extra = [])
+{
     echo json_encode(array_merge([
         "success" => $success,
         "status" => $status,
@@ -52,10 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 /* =========================
-   CONNECT TO DATABASE
+   ENV CHECK
 ========================= */
-load_env(__DIR__ . "/.env");
+$env_loaded = load_env(__DIR__ . "/.env");
 
+if (!$env_loaded) {
+    send_json(false, "env_missing", ".env file not found.");
+}
+
+/* =========================
+   DATABASE CONNECTION
+========================= */
 $host = $_ENV["DB_HOST"] ?? "";
 $user = $_ENV["DB_USER"] ?? "";
 $password = $_ENV["DB_PASS"] ?? "";
@@ -161,7 +147,6 @@ if ($action === "submit") {
 
     $pre_wedding = trim($_POST["pre_wedding_attendance"] ?? "");
     $wedding = trim($_POST["wedding_attendance"] ?? "");
-
     $pre_wedding_guest = trim($_POST["pre_wedding_guest_attendance"] ?? "");
     $wedding_guest = trim($_POST["wedding_guest_attendance"] ?? "");
 
@@ -286,47 +271,11 @@ if ($action === "submit") {
         send_json(false, "server_error", "Execute failed in SUBMIT.");
     }
 
-    $verify_sql = "
-        SELECT 
-            is_submitted,
-            pre_wedding_attendance,
-            wedding_attendance,
-            pre_wedding_guest_attendance,
-            wedding_guest_attendance,
-            guests_count
-        FROM rsvps
-        WHERE id = ?
-        LIMIT 1
-    ";
-
-    $verify_stmt = $conn->prepare($verify_sql);
-
-    if (!$verify_stmt) {
-        send_json(false, "server_error", "Prepare failed while verifying RSVP.");
+    if ($update_stmt->affected_rows < 0) {
+        send_json(false, "not_saved", "The RSVP could not be saved. Please try again.");
     }
 
-    $verify_stmt->bind_param("i", $guest_id);
-
-    if (!$verify_stmt->execute()) {
-        send_json(false, "server_error", "Execute failed while verifying RSVP.");
-    }
-
-    $verify_result = $verify_stmt->get_result();
-    $saved = $verify_result->fetch_assoc();
-
-    if (
-        $saved &&
-        (int)$saved["is_submitted"] === 1 &&
-        $saved["pre_wedding_attendance"] === $pre_wedding &&
-        $saved["wedding_attendance"] === $wedding &&
-        $saved["pre_wedding_guest_attendance"] === $pre_wedding_guest &&
-        $saved["wedding_guest_attendance"] === $wedding_guest &&
-        (int)$saved["guests_count"] === $guests_count
-    ) {
-        send_json(true, "submitted", "Thank you! Your RSVP was submitted successfully.");
-    }
-
-    send_json(false, "not_saved", "The RSVP could not be saved. Please try again.");
+    send_json(true, "submitted", "Thank you! Your RSVP was submitted successfully.");
 }
 
 /* =========================
