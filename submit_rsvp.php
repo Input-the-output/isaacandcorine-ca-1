@@ -8,12 +8,28 @@ error_reporting(E_ALL);
 mysqli_report(MYSQLI_REPORT_OFF);
 
 /* =========================
-   DATABASE CONNECTION
+   ENV LOADER
 ========================= */
-$host = "sql312.infinityfree.com";
-$user = "if0_42030387";
-$password = "81387985";
-$database = "if0_42030387_wedding";
+function load_env($path) {
+    if (!file_exists($path)) {
+        send_json(false, "env_missing", ".env file not found.");
+    }
+
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+    foreach ($lines as $line) {
+        $line = trim($line);
+
+        if ($line === "" || str_starts_with($line, "#")) {
+            continue;
+        }
+
+        if (strpos($line, "=") !== false) {
+            [$key, $value] = explode("=", $line, 2);
+            $_ENV[trim($key)] = trim($value);
+        }
+    }
+}
 
 /* =========================
    JSON RESPONSE HELPER
@@ -38,10 +54,18 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 /* =========================
    CONNECT TO DATABASE
 ========================= */
-$conn = new mysqli($host, $user, $password, $database);
+load_env(__DIR__ . "/.env");
+
+$host = $_ENV["DB_HOST"] ?? "";
+$user = $_ENV["DB_USER"] ?? "";
+$password = $_ENV["DB_PASS"] ?? "";
+$database = $_ENV["DB_NAME"] ?? "";
+$port = (int)($_ENV["DB_PORT"] ?? 3306);
+
+$conn = new mysqli($host, $user, $password, $database, $port);
 
 if ($conn->connect_error) {
-    send_json(false, "db_connection_failed", "Database connection failed: " . $conn->connect_error);
+    send_json(false, "db_connection_failed", "Database connection failed.");
 }
 
 $conn->set_charset("utf8mb4");
@@ -78,13 +102,13 @@ if ($action === "find") {
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
-        send_json(false, "server_error", "Prepare failed in FIND: " . $conn->error);
+        send_json(false, "server_error", "Prepare failed in FIND.");
     }
 
     $stmt->bind_param("s", $full_name);
 
     if (!$stmt->execute()) {
-        send_json(false, "server_error", "Execute failed in FIND: " . $stmt->error);
+        send_json(false, "server_error", "Execute failed in FIND.");
     }
 
     $result = $stmt->get_result();
@@ -140,6 +164,7 @@ if ($action === "submit") {
 
     $pre_wedding_guest = trim($_POST["pre_wedding_guest_attendance"] ?? "");
     $wedding_guest = trim($_POST["wedding_guest_attendance"] ?? "");
+
     if ($guest_id <= 0) {
         send_json(false, "invalid_guest", "Invalid guest.");
     }
@@ -158,9 +183,6 @@ if ($action === "submit") {
 
     if (!in_array($wedding_guest, ["attending", "declining"], true)) {
         send_json(false, "missing_wedding_guest", "Please select your Guest +1 Wedding attendance.");
-    }
-    if ($wedding_guest === "attending") {
-        $wedding_guest_count += 1;
     }
 
     $check_sql = "
@@ -182,13 +204,13 @@ if ($action === "submit") {
     $check_stmt = $conn->prepare($check_sql);
 
     if (!$check_stmt) {
-        send_json(false, "server_error", "Prepare failed while checking guest: " . $conn->error);
+        send_json(false, "server_error", "Prepare failed while checking guest.");
     }
 
     $check_stmt->bind_param("is", $guest_id, $full_name);
 
     if (!$check_stmt->execute()) {
-        send_json(false, "server_error", "Execute failed while checking guest: " . $check_stmt->error);
+        send_json(false, "server_error", "Execute failed while checking guest.");
     }
 
     $check_result = $check_stmt->get_result();
@@ -212,14 +234,6 @@ if ($action === "submit") {
 
     $overall_attendance = $wedding === "attending" ? "yes" : "no";
 
-    /*
-        guests_count uses the existing database column.
-        It starts from 0 and adds +1 for every "attending" choice:
-        - Pre-Wedding main guest
-        - Pre-Wedding Guest +1
-        - Wedding main guest
-        - Wedding Guest +1
-    */
     $guests_count = 0;
 
     if ($pre_wedding === "attending") {
@@ -254,7 +268,7 @@ if ($action === "submit") {
     $update_stmt = $conn->prepare($update_sql);
 
     if (!$update_stmt) {
-        send_json(false, "server_error", "Prepare failed in SUBMIT: " . $conn->error);
+        send_json(false, "server_error", "Prepare failed in SUBMIT.");
     }
 
     $update_stmt->bind_param(
@@ -269,7 +283,7 @@ if ($action === "submit") {
     );
 
     if (!$update_stmt->execute()) {
-        send_json(false, "server_error", "Execute failed in SUBMIT: " . $update_stmt->error);
+        send_json(false, "server_error", "Execute failed in SUBMIT.");
     }
 
     $verify_sql = "
@@ -288,13 +302,13 @@ if ($action === "submit") {
     $verify_stmt = $conn->prepare($verify_sql);
 
     if (!$verify_stmt) {
-        send_json(false, "server_error", "Prepare failed while verifying RSVP: " . $conn->error);
+        send_json(false, "server_error", "Prepare failed while verifying RSVP.");
     }
 
     $verify_stmt->bind_param("i", $guest_id);
 
     if (!$verify_stmt->execute()) {
-        send_json(false, "server_error", "Execute failed while verifying RSVP: " . $verify_stmt->error);
+        send_json(false, "server_error", "Execute failed while verifying RSVP.");
     }
 
     $verify_result = $verify_stmt->get_result();
